@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #2c4059;
+    }
+
+    .contenedor {
+        display: grid;        
+        max-width: 800px;
+        margin: 50px auto;        
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, auto);
+        grid-template-areas:"header       header "
+                            "content      content"
+                            "resultado    resultado"
+                            "footer       footer"
+    }
+
+    .header {
+        grid-area: header;
+        /* background: red; */
+        padding: 30px;
+        text-align: center;
+    }    
+
+    .header h1 {
+        font-size: 100px;
+        font-weight: 400;
+        color: #ea5354;
+        font-family: 'Lobster', cursive;
+    }
+
+    .contenido {
+        grid-area: content;
+        padding: 20px 100px;
+        grid-gap: 50px 35px;
+        /* background: green; */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);        
+        grid-template-rows: repeat(2, auto);
+    }
+
+    .contenido .tablero  {
+        text-align: center;    
+        font-style: italic;
+        font-size: 35px;
+        font-weight: 400;
+        color: #ea5354;
+    }
+
+    .contenido .dado {
+        background: white;
+        min-height: 250px;        
+        border-radius: 25px;
+        box-shadow: 5px 5px 10px 2px black;
+        display: grid;
+        overflow: hidden;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, auto);
+        grid-template-areas:"1 2 3"
+                            "4 5 6"
+                            "7 8 9";                                                                
+    }
+
+    .contenido .dado div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+    }
+
+    .contenido .dado div > .point{        
+        background: black;
+        border-radius: 50%;
+        width: 40%;
+        height: 40%;                    
+    }
+
+    .resultado {
+        grid-area: resultado;
+    }
+
+    .final {
+        text-align: center;
+        font-size: 40px;
+        font-weight: 600px;
+        color: white;
+        font-family: 'Lobster', cursive;
+    }
+
+    .footer {
+        grid-area: footer;
+        /* background: purple; */
+        padding: 50px;
+        text-align: center;
+    }
+
+    .footer button {
+        padding: 20px 50px;
+        font-size: 20px;
+        box-shadow: 5px 5px 10px 2px black;
+        background: #ffc107;        
+    }
+</style>
+<body>
+    <div class="contenedor">
+        <header class="header">            
+            <h1>Juego de dados</h1>
+        </header>
+        
+        <main class="contenido">
+            <div class="tablero">
+                <h5>Jugador 1</h5>
+            </div>
+            <div class="tablero">
+                <h5>Jugador 2</h5>
+            </div>
+            <div id="jugador" class="dado">
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+            </div>
+            <div id="rival" class="dado">
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+                <div>
+                    <!-- <div class="point"></div> -->
+                </div>
+            </div>
+        </main>
+
+        <div id="final" class="resultado"></div>
+        
+        <footer class="footer">
+            <button id="btnJugar">¡Jugar!</button>
+        </footer>
+    </div>
+
+    <script>
+        //DECLARACION DE VARIABLES
+        let boton = document.getElementById("btnJugar");
+        let rival = document.getElementById("rival").children;                   
+        let jugador = document.getElementById("jugador").children;        
+        let resultado = document.getElementById("final");
+
+        //FUNCION DE TURNO PARA EL JUGADOR
+        var tiroJugador = () => {
+            let num = Math.floor((Math.random() * (7-1))+1);            
+
+            switch (num) {
+                case 1:
+                    jugador[4].innerHTML = '<div class="point"></div>';
+                    break;
+
+                case 2: 
+                    jugador[0].innerHTML = '<div class="point"></div>';
+                    jugador[4].innerHTML = '<div class="point"></div>';
+                    break;
+                
+                case 3: 
+                    jugador[0].innerHTML = '<div class="point"></div>';
+                    jugador[4].innerHTML = '<div class="point"></div>';
+                    jugador[8].innerHTML = '<div class="point"></div>';
+                break;
+
+                case 4: 
+                    jugador[0].innerHTML = '<div class="point"></div>';
+                    jugador[2].innerHTML = '<div class="point"></div>';
+                    jugador[6].innerHTML = '<div class="point"></div>';
+                    jugador[8].innerHTML = '<div class="point"></div>';
+                break;
+                
+                case 5: 
+                    jugador[0].innerHTML = '<div class="point"></div>';
+                    jugador[2].innerHTML = '<div class="point"></div>';
+                    jugador[4].innerHTML = '<div class="point"></div>';
+                    jugador[6].innerHTML = '<div class="point"></div>';
+                    jugador[8].innerHTML = '<div class="point"></div>';
+                break;
+                
+                case 6: 
+                    jugador[0].innerHTML = '<div class="point"></div>';
+                    jugador[3].innerHTML = '<div class="point"></div>';
+                    jugador[6].innerHTML = '<div class="point"></div>';
+                    jugador[2].innerHTML = '<div class="point"></div>';
+                    jugador[5].innerHTML = '<div class="point"></div>';
+                    jugador[8].innerHTML = '<div class="point"></div>';
+                break;                            
+            }
+                        
+            return num;
+        }
+        
+        //FUNCION DE TURNO PARA EL RIVAL
+        var tiroRival = () => {
+            let num = Math.floor((Math.random() * (7-1))+1);            
+
+            switch (num) {
+                case 1:
+                    rival[4].innerHTML = '<div class="point"></div>';
+                    break;
+
+                case 2: 
+                    rival[0].innerHTML = '<div class="point"></div>';
+                    rival[4].innerHTML = '<div class="point"></div>';
+                    break;
+                
+                case 3: 
+                    rival[0].innerHTML = '<div class="point"></div>';
+                    rival[4].innerHTML = '<div class="point"></div>';
+                    rival[8].innerHTML = '<div class="point"></div>';
+                break;
+
+                case 4: 
+                    rival[0].innerHTML = '<div class="point"></div>';
+                    rival[2].innerHTML = '<div class="point"></div>';
+                    rival[6].innerHTML = '<div class="point"></div>';
+                    rival[8].innerHTML = '<div class="point"></div>';
+                break;
+                
+                case 5: 
+                    rival[0].innerHTML = '<div class="point"></div>';
+                    rival[2].innerHTML = '<div class="point"></div>';
+                    rival[4].innerHTML = '<div class="point"></div>';
+                    rival[6].innerHTML = '<div class="point"></div>';
+                    rival[8].innerHTML = '<div class="point"></div>';
+                break;
+                
+                case 6: 
+                    rival[0].innerHTML = '<div class="point"></div>';
+                    rival[3].innerHTML = '<div class="point"></div>';
+                    rival[6].innerHTML = '<div class="point"></div>';
+                    rival[2].innerHTML = '<div class="point"></div>';
+                    rival[5].innerHTML = '<div class="point"></div>';
+                    rival[8].innerHTML = '<div class="point"></div>';
+                break;                            
+            }
+                        
+            return num;
+        }
+
+        //FUNCION PARA LIMPIAR EL DADO
+        var clear = () => {
+            // limpiar dado del rival
+            for (let i = 0; i < rival.length; i++) {
+                rival[i].innerHTML = '';
+            } 
+
+            // limpiar dado del jugador
+            for (let i = 0; i < jugador.length; i++) {
+                jugador[i].innerHTML = '';
+            }                   
+        }
+
+        //EVENTO CLICK PAFA JUGAR
+        boton.addEventListener("click", (e) => {                
+            clear();
+            resultado.innerHTML = '';
+        
+            let juegoJugador = tiroJugador();
+            let JuegoRival = tiroRival();
+
+            //analisis de empate
+            if(juegoJugador == JuegoRival) {
+                resultado.innerHTML = '<h1 class="final">Empate :(</h1>';                                             
+            }
+
+            if(juegoJugador != JuegoRival) {
+               //analisis de resultado final
+                if(juegoJugador > JuegoRival) {
+                    resultado.innerHTML = '<h1 class="final">El jugador es el ganador</h1>';                                       
+                } else {                    
+                    resultado.innerHTML = '<h1 class="final">El rival es el ganador</h1>';                    
+                }
+            }
+
+            // tiempo de espera para la limpieza
+            // setTimeout(() => {
+            //     clear();
+            //     resultado.innerHTML = '';
+            // }, 1200);            
+
+        });         
+    </script>
+</body>
+</html>
